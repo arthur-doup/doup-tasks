@@ -82,7 +82,7 @@ services:
         - "traefik.enable=true"
         - "traefik.http.routers.plane-api.rule=Host(`tasks.doupadvice.com`) && PathPrefix(`/api`, `/auth`)"
         - "traefik.http.routers.plane-api.entrypoints=websecure"
-        - "traefik.http.routers.plane-api.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.plane-api.tls.certresolver=letsencryptresolver"
         - "traefik.http.services.plane-api.loadbalancer.server.port=8000"
         - "traefik.docker.network=DoupNet"
     networks:
@@ -215,7 +215,7 @@ services:
         - "traefik.enable=true"
         - "traefik.http.routers.plane-web.rule=Host(`tasks.doupadvice.com`)"
         - "traefik.http.routers.plane-web.entrypoints=websecure"
-        - "traefik.http.routers.plane-web.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.plane-web.tls.certresolver=letsencryptresolver"
         - "traefik.http.routers.plane-web.priority=1"
         - "traefik.http.services.plane-web.loadbalancer.server.port=3000"
         - "traefik.docker.network=DoupNet"
@@ -237,7 +237,7 @@ services:
         - "traefik.enable=true"
         - "traefik.http.routers.plane-space.rule=Host(`tasks.doupadvice.com`) && PathPrefix(`/spaces`)"
         - "traefik.http.routers.plane-space.entrypoints=websecure"
-        - "traefik.http.routers.plane-space.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.plane-space.tls.certresolver=letsencryptresolver"
         - "traefik.http.services.plane-space.loadbalancer.server.port=3000"
         - "traefik.docker.network=DoupNet"
     networks:
@@ -259,7 +259,7 @@ services:
         - "traefik.enable=true"
         - "traefik.http.routers.plane-admin.rule=Host(`tasks.doupadvice.com`) && PathPrefix(`/god-mode`)"
         - "traefik.http.routers.plane-admin.entrypoints=websecure"
-        - "traefik.http.routers.plane-admin.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.plane-admin.tls.certresolver=letsencryptresolver"
         - "traefik.http.services.plane-admin.loadbalancer.server.port=3000"
         - "traefik.docker.network=DoupNet"
     networks:
