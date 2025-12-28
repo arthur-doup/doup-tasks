@@ -25,6 +25,7 @@ x-app-env: &app-env
   WEB_URL: https://tasks.doupadvice.com
   CORS_ALLOWED_ORIGINS: https://tasks.doupadvice.com
   USE_MINIO: "1"
+  MINIO_ENDPOINT_SSL: "1"
   AWS_ACCESS_KEY_ID: ${MINIO_ACCESS_KEY:-plane}
   AWS_SECRET_ACCESS_KEY: ${MINIO_SECRET_KEY:-planesecret}
   AWS_S3_ENDPOINT_URL: http://plane-minio:9000
