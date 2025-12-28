@@ -1,8 +1,8 @@
 version: "3.8"
 
 # =============================================================================
-# PLANE - Stack para Cloudflare Tunnel
-# Porta: 3010 (configurar no tunnel como http://host.docker.internal:3010)
+# PLANE - Stack para Cloudflare Tunnel (com Nginx Proxy)
+# Porta: 3010
 # =============================================================================
 
 x-app-env: &app-env
@@ -28,18 +28,22 @@ x-app-env: &app-env
 
 services:
   # ─────────────────────────────────────────────────────────────────────────────
-  # PROXY - Expõe na porta 3010
+  # NGINX PROXY - Expõe na porta 3010
   # ─────────────────────────────────────────────────────────────────────────────
   plane-proxy:
-    image: makeplane/plane-proxy:stable
+    image: nginx:alpine
     ports:
       - "3010:80"
     networks:
       - plane-net
+    configs:
+      - source: nginx-config
+        target: /etc/nginx/nginx.conf
     depends_on:
       - plane-web
       - plane-api
       - plane-space
+      - plane-admin
     deploy:
       replicas: 1
       restart_policy:
@@ -181,6 +185,13 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CONFIGS
+# ─────────────────────────────────────────────────────────────────────────────
+configs:
+  nginx-config:
+    file: ./nginx.conf
 
 # ─────────────────────────────────────────────────────────────────────────────
 # VOLUMES E NETWORKS
