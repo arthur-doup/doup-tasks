@@ -1,0 +1,195 @@
+version: "3.8"
+
+# =============================================================================
+# PLANE - Stack para Cloudflare Tunnel
+# Porta: 3010 (configurar no tunnel como http://host.docker.internal:3010)
+# =============================================================================
+
+x-app-env: &app-env
+  DEBUG: "0"
+  POSTGRES_USER: plane
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-plane123}
+  POSTGRES_HOST: plane-db
+  POSTGRES_DB: plane
+  POSTGRES_PORT: 5432
+  DATABASE_URL: postgresql://plane:${POSTGRES_PASSWORD:-plane123}@plane-db:5432/plane
+  REDIS_HOST: plane-redis
+  REDIS_PORT: 6379
+  REDIS_URL: redis://plane-redis:6379/
+  SECRET_KEY: ${SECRET_KEY:-your-secret-key-min-32-chars-change-me}
+  WEB_URL: https://tasks.doupadvice.com
+  CORS_ALLOWED_ORIGINS: https://tasks.doupadvice.com
+  USE_MINIO: 1
+  AWS_ACCESS_KEY_ID: ${MINIO_ACCESS_KEY:-plane}
+  AWS_SECRET_ACCESS_KEY: ${MINIO_SECRET_KEY:-planesecret}
+  AWS_S3_ENDPOINT_URL: http://plane-minio:9000
+  AWS_S3_BUCKET_NAME: uploads
+  FILE_SIZE_LIMIT: 5242880
+
+services:
+  # ─────────────────────────────────────────────────────────────────────────────
+  # PROXY - Expõe na porta 3010
+  # ─────────────────────────────────────────────────────────────────────────────
+  plane-proxy:
+    image: makeplane/plane-proxy:stable
+    ports:
+      - "3010:80"
+    networks:
+      - plane-net
+    depends_on:
+      - plane-web
+      - plane-api
+      - plane-space
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # FRONTEND
+  # ─────────────────────────────────────────────────────────────────────────────
+  plane-web:
+    image: makeplane/plane-frontend:stable
+    networks:
+      - plane-net
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: https://tasks.doupadvice.com
+    depends_on:
+      - plane-api
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  plane-space:
+    image: makeplane/plane-space:stable
+    networks:
+      - plane-net
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: https://tasks.doupadvice.com
+    depends_on:
+      - plane-api
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  plane-admin:
+    image: makeplane/plane-admin:stable
+    networks:
+      - plane-net
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: https://tasks.doupadvice.com
+    depends_on:
+      - plane-api
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # BACKEND
+  # ─────────────────────────────────────────────────────────────────────────────
+  plane-api:
+    image: makeplane/plane-backend:stable
+    command: ./bin/docker-entrypoint-api.sh
+    networks:
+      - plane-net
+    environment:
+      <<: *app-env
+    depends_on:
+      - plane-db
+      - plane-redis
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  plane-worker:
+    image: makeplane/plane-backend:stable
+    command: ./bin/docker-entrypoint-worker.sh
+    networks:
+      - plane-net
+    environment:
+      <<: *app-env
+    depends_on:
+      - plane-api
+      - plane-db
+      - plane-redis
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  plane-beat:
+    image: makeplane/plane-backend:stable
+    command: ./bin/docker-entrypoint-beat.sh
+    networks:
+      - plane-net
+    environment:
+      <<: *app-env
+    depends_on:
+      - plane-api
+      - plane-db
+      - plane-redis
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # INFRAESTRUTURA
+  # ─────────────────────────────────────────────────────────────────────────────
+  plane-db:
+    image: postgres:15.7-alpine
+    command: postgres -c 'max_connections=1000'
+    networks:
+      - plane-net
+    volumes:
+      - plane-db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: plane
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-plane123}
+      POSTGRES_DB: plane
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  plane-redis:
+    image: valkey/valkey:7.2.11-alpine
+    networks:
+      - plane-net
+    volumes:
+      - plane-redis-data:/data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  plane-minio:
+    image: minio/minio
+    command: server /export --console-address ":9090"
+    networks:
+      - plane-net
+    volumes:
+      - plane-minio-data:/export
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY:-plane}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY:-planesecret}
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+# ─────────────────────────────────────────────────────────────────────────────
+# VOLUMES E NETWORKS
+# ─────────────────────────────────────────────────────────────────────────────
+volumes:
+  plane-db-data:
+  plane-redis-data:
+  plane-minio-data:
+
+networks:
+  plane-net:
+    driver: overlay
