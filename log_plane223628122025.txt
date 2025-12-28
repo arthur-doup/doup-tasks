@@ -1,0 +1,11 @@
+root@DoupAdvice:~/plane# docker service ps plane_plane-api --no-trunc
+ID                          NAME                    IMAGE                                                                                                    NODE         DESIRED STATE   CURRENT STATE           ERROR                       PORTS
+io04k4p1veoyfpyv2u28ibmvt   plane_plane-api.1       makeplane/plane-backend:stable@sha256:b9317c167743c2d56c51a19b3f151d064d4a40cc4d011fee0976f8985881e03d   DoupAdvice   Running         Running 4 minutes ago
+chdaujhckfsnva53kgkx0vxpw    \_ plane_plane-api.1   makeplane/plane-backend:stable@sha256:b9317c167743c2d56c51a19b3f151d064d4a40cc4d011fee0976f8985881e03d   DoupAdvice   Shutdown        Failed 4 minutes ago    "task: non-zero exit (1)"
+root@DoupAdvice:~/plane# docker service update --force plane_plane-api
+sleep 30
+plane_plane-api
+overall progress: 1 out of 1 tasks
+1/1: running   [==================================================>]
+verify: Service plane_plane-api converged
+root@DoupAdvice:~/plane#

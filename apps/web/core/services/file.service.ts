@@ -9,6 +9,17 @@ import { getAssetIdFromUrl } from "@plane/utils";
 import { APIService } from "@/services/api.service";
 import { FileUploadService } from "@/services/file-upload.service";
 
+/**
+ * Helper function to ensure upload URLs use HTTPS
+ * This fixes Mixed Content errors when behind a reverse proxy with SSL termination
+ */
+const ensureHttps = (url: string): string => {
+  if (url && url.startsWith("http://")) {
+    return url.replace("http://", "https://");
+  }
+  return url;
+};
+
 export interface UnSplashImage {
   id: string;
   created_at: Date;
@@ -78,7 +89,7 @@ export class FileService extends APIService {
         const signedURLResponse: TFileSignedURLResponse = response?.data;
         const fileUploadPayload = generateFileUploadPayload(signedURLResponse, file);
         await this.fileUploadService.uploadFile(
-          signedURLResponse.upload_data.url,
+          ensureHttps(signedURLResponse.upload_data.url),
           fileUploadPayload,
           uploadProgressHandler
         );
@@ -155,7 +166,7 @@ export class FileService extends APIService {
         const signedURLResponse: TFileSignedURLResponse = response?.data;
         const fileUploadPayload = generateFileUploadPayload(signedURLResponse, file);
         await this.fileUploadService.uploadFile(
-          signedURLResponse.upload_data.url,
+          ensureHttps(signedURLResponse.upload_data.url),
           fileUploadPayload,
           uploadProgressHandler
         );
@@ -184,7 +195,7 @@ export class FileService extends APIService {
       .then(async (response) => {
         const signedURLResponse: TFileSignedURLResponse = response?.data;
         const fileUploadPayload = generateFileUploadPayload(signedURLResponse, file);
-        await this.fileUploadService.uploadFile(signedURLResponse.upload_data.url, fileUploadPayload);
+        await this.fileUploadService.uploadFile(ensureHttps(signedURLResponse.upload_data.url), fileUploadPayload);
         await this.updateUserAssetUploadStatus(signedURLResponse.asset_id);
         return signedURLResponse;
       })

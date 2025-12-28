@@ -8,6 +8,16 @@ import { EIssueServiceType } from "@plane/types";
 import { APIService } from "@/services/api.service";
 import { FileUploadService } from "@/services/file-upload.service";
 
+/**
+ * Helper function to ensure upload URLs use HTTPS
+ */
+const ensureHttps = (url: string): string => {
+  if (url && url.startsWith("http://")) {
+    return url.replace("http://", "https://");
+  }
+  return url;
+};
+
 export class IssueAttachmentService extends APIService {
   private fileUploadService: FileUploadService;
   private serviceType: TIssueServiceType;
@@ -50,7 +60,7 @@ export class IssueAttachmentService extends APIService {
         const signedURLResponse: TIssueAttachmentUploadResponse = response?.data;
         const fileUploadPayload = generateFileUploadPayload(signedURLResponse, file);
         await this.fileUploadService.uploadFile(
-          signedURLResponse.upload_data.url,
+          ensureHttps(signedURLResponse.upload_data.url),
           fileUploadPayload,
           uploadProgressHandler
         );

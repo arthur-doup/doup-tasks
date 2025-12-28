@@ -8,6 +8,16 @@ import { FileService } from "./file.service";
 import { generateFileUploadPayload, getAssetIdFromUrl, getFileMetaDataForUpload } from "./helper";
 
 /**
+ * Helper function to ensure upload URLs use HTTPS
+ */
+const ensureHttps = (url: string): string => {
+  if (url && url.startsWith("http://")) {
+    return url.replace("http://", "https://");
+  }
+  return url;
+};
+
+/**
  * Service class for managing file operations within plane sites application.
  * Extends FileService to manage file-related operations.
  * @extends {FileService}
@@ -82,7 +92,7 @@ export class SitesFileService extends FileService {
       .then(async (response) => {
         const signedURLResponse: TFileSignedURLResponse = response?.data;
         const fileUploadPayload = generateFileUploadPayload(signedURLResponse, file);
-        await this.fileUploadService.uploadFile(signedURLResponse.upload_data.url, fileUploadPayload);
+        await this.fileUploadService.uploadFile(ensureHttps(signedURLResponse.upload_data.url), fileUploadPayload);
         await this.updateAssetUploadStatus(anchor, signedURLResponse.asset_id);
         return signedURLResponse;
       })
