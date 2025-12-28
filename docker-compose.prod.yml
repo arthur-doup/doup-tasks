@@ -1,0 +1,291 @@
+version: "3.8"
+
+# =============================================================================
+# PLANE - Stack de Produção para Docker Swarm com Traefik
+# Domínio: tasks.doupadvice.com
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # INFRAESTRUTURA
+  # ---------------------------------------------------------------------------
+  
+  plane-redis:
+    image: valkey/valkey:7.2.11-alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - plane-internal
+    volumes:
+      - plane-redis-data:/data
+
+  plane-mq:
+    image: rabbitmq:3.13.6-management-alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - plane-internal
+    volumes:
+      - plane-mq-data:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: plane
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-plane_mq_secret}
+      RABBITMQ_DEFAULT_VHOST: plane
+
+  plane-minio:
+    image: minio/minio
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - plane-internal
+    command: server /export --console-address ":9090"
+    volumes:
+      - plane-uploads:/export
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY:-plane_minio_access}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY:-plane_minio_secret}
+
+  plane-db:
+    image: postgres:15.7-alpine
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - plane-internal
+    command: postgres -c 'max_connections=1000'
+    volumes:
+      - plane-db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: plane
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-plane_db_secret}
+      POSTGRES_DB: plane
+      PGDATA: /var/lib/postgresql/data
+
+  # ---------------------------------------------------------------------------
+  # BACKEND
+  # ---------------------------------------------------------------------------
+
+  plane-api:
+    image: makeplane/plane-backend:stable
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.plane-api.rule=Host(`tasks.doupadvice.com`) && PathPrefix(`/api`, `/auth`)"
+        - "traefik.http.routers.plane-api.entrypoints=websecure"
+        - "traefik.http.routers.plane-api.tls.certresolver=letsencrypt"
+        - "traefik.http.services.plane-api.loadbalancer.server.port=8000"
+        - "traefik.docker.network=DoupNet"
+    networks:
+      - plane-internal
+      - DoupNet
+    environment:
+      DEBUG: "0"
+      DJANGO_SETTINGS_MODULE: plane.settings.production
+      
+      # Database
+      POSTGRES_USER: plane
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-plane_db_secret}
+      POSTGRES_HOST: plane-db
+      POSTGRES_DB: plane
+      POSTGRES_PORT: 5432
+      DATABASE_URL: postgresql://plane:${POSTGRES_PASSWORD:-plane_db_secret}@plane-db:5432/plane
+      
+      # Redis
+      REDIS_HOST: plane-redis
+      REDIS_PORT: 6379
+      REDIS_URL: redis://plane-redis:6379/
+      
+      # RabbitMQ
+      RABBITMQ_HOST: plane-mq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: plane
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-plane_mq_secret}
+      RABBITMQ_VHOST: plane
+      
+      # Storage (Minio)
+      USE_MINIO: 1
+      AWS_ACCESS_KEY_ID: ${MINIO_ACCESS_KEY:-plane_minio_access}
+      AWS_SECRET_ACCESS_KEY: ${MINIO_SECRET_KEY:-plane_minio_secret}
+      AWS_S3_ENDPOINT_URL: http://plane-minio:9000
+      AWS_S3_BUCKET_NAME: uploads
+      FILE_SIZE_LIMIT: 5242880
+      
+      # URLs
+      WEB_URL: https://tasks.doupadvice.com
+      CORS_ALLOWED_ORIGINS: https://tasks.doupadvice.com
+      
+      # Security
+      SECRET_KEY: ${SECRET_KEY:-your_super_secret_key_change_me}
+      
+    depends_on:
+      - plane-db
+      - plane-redis
+      - plane-mq
+
+  plane-worker:
+    image: makeplane/plane-backend:stable
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - plane-internal
+    command: ./bin/docker-entrypoint-worker.sh
+    environment:
+      DEBUG: "0"
+      DJANGO_SETTINGS_MODULE: plane.settings.production
+      POSTGRES_USER: plane
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-plane_db_secret}
+      POSTGRES_HOST: plane-db
+      POSTGRES_DB: plane
+      POSTGRES_PORT: 5432
+      DATABASE_URL: postgresql://plane:${POSTGRES_PASSWORD:-plane_db_secret}@plane-db:5432/plane
+      REDIS_HOST: plane-redis
+      REDIS_PORT: 6379
+      REDIS_URL: redis://plane-redis:6379/
+      RABBITMQ_HOST: plane-mq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: plane
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-plane_mq_secret}
+      RABBITMQ_VHOST: plane
+      USE_MINIO: 1
+      AWS_ACCESS_KEY_ID: ${MINIO_ACCESS_KEY:-plane_minio_access}
+      AWS_SECRET_ACCESS_KEY: ${MINIO_SECRET_KEY:-plane_minio_secret}
+      AWS_S3_ENDPOINT_URL: http://plane-minio:9000
+      AWS_S3_BUCKET_NAME: uploads
+      SECRET_KEY: ${SECRET_KEY:-your_super_secret_key_change_me}
+    depends_on:
+      - plane-api
+      - plane-db
+      - plane-redis
+
+  plane-beat:
+    image: makeplane/plane-backend:stable
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - plane-internal
+    command: ./bin/docker-entrypoint-beat.sh
+    environment:
+      DEBUG: "0"
+      DJANGO_SETTINGS_MODULE: plane.settings.production
+      POSTGRES_USER: plane
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-plane_db_secret}
+      POSTGRES_HOST: plane-db
+      POSTGRES_DB: plane
+      POSTGRES_PORT: 5432
+      DATABASE_URL: postgresql://plane:${POSTGRES_PASSWORD:-plane_db_secret}@plane-db:5432/plane
+      REDIS_HOST: plane-redis
+      REDIS_PORT: 6379
+      REDIS_URL: redis://plane-redis:6379/
+      RABBITMQ_HOST: plane-mq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: plane
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD:-plane_mq_secret}
+      RABBITMQ_VHOST: plane
+      SECRET_KEY: ${SECRET_KEY:-your_super_secret_key_change_me}
+    depends_on:
+      - plane-api
+      - plane-db
+      - plane-redis
+
+  # ---------------------------------------------------------------------------
+  # FRONTEND
+  # ---------------------------------------------------------------------------
+
+  plane-web:
+    image: makeplane/plane-frontend:stable
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.plane-web.rule=Host(`tasks.doupadvice.com`)"
+        - "traefik.http.routers.plane-web.entrypoints=websecure"
+        - "traefik.http.routers.plane-web.tls.certresolver=letsencrypt"
+        - "traefik.http.routers.plane-web.priority=1"
+        - "traefik.http.services.plane-web.loadbalancer.server.port=3000"
+        - "traefik.docker.network=DoupNet"
+    networks:
+      - plane-internal
+      - DoupNet
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: https://tasks.doupadvice.com
+    depends_on:
+      - plane-api
+
+  plane-space:
+    image: makeplane/plane-space:stable
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.plane-space.rule=Host(`tasks.doupadvice.com`) && PathPrefix(`/spaces`)"
+        - "traefik.http.routers.plane-space.entrypoints=websecure"
+        - "traefik.http.routers.plane-space.tls.certresolver=letsencrypt"
+        - "traefik.http.services.plane-space.loadbalancer.server.port=3000"
+        - "traefik.docker.network=DoupNet"
+    networks:
+      - plane-internal
+      - DoupNet
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: https://tasks.doupadvice.com
+    depends_on:
+      - plane-api
+      - plane-web
+
+  plane-admin:
+    image: makeplane/plane-admin:stable
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.plane-admin.rule=Host(`tasks.doupadvice.com`) && PathPrefix(`/god-mode`)"
+        - "traefik.http.routers.plane-admin.entrypoints=websecure"
+        - "traefik.http.routers.plane-admin.tls.certresolver=letsencrypt"
+        - "traefik.http.services.plane-admin.loadbalancer.server.port=3000"
+        - "traefik.docker.network=DoupNet"
+    networks:
+      - plane-internal
+      - DoupNet
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: https://tasks.doupadvice.com
+    depends_on:
+      - plane-api
+      - plane-web
+
+# -----------------------------------------------------------------------------
+# VOLUMES
+# -----------------------------------------------------------------------------
+volumes:
+  plane-redis-data:
+  plane-mq-data:
+  plane-uploads:
+  plane-db-data:
+
+# -----------------------------------------------------------------------------
+# NETWORKS
+# -----------------------------------------------------------------------------
+networks:
+  plane-internal:
+    driver: overlay
+    internal: true
+  DoupNet:
+    external: true
