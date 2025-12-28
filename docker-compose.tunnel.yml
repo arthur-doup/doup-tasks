@@ -16,6 +16,13 @@ x-app-env: &app-env
   REDIS_HOST: plane-redis
   REDIS_PORT: 6379
   REDIS_URL: redis://plane-redis:6379/
+  RABBITMQ_HOST: plane-mq
+  RABBITMQ_PORT: 5672
+  RABBITMQ_DEFAULT_USER: plane
+  RABBITMQ_DEFAULT_PASS: plane
+  RABBITMQ_DEFAULT_VHOST: plane
+  RABBITMQ_VHOST: plane
+  BROKER_URL: amqp://plane:plane@plane-mq:5672/plane
   SECRET_KEY: ${SECRET_KEY:-your-secret-key-min-32-chars-change-me}
   WEB_URL: https://tasks.doupadvice.com
   CORS_ALLOWED_ORIGINS: https://tasks.doupadvice.com
@@ -186,6 +193,21 @@ services:
       restart_policy:
         condition: on-failure
 
+  plane-mq:
+    image: rabbitmq:3.13.6-management-alpine
+    networks:
+      - plane-net
+    volumes:
+      - plane-mq-data:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: plane
+      RABBITMQ_DEFAULT_PASS: plane
+      RABBITMQ_DEFAULT_VHOST: plane
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
   plane-minio:
     image: minio/minio
     command: server /export --console-address ":9090"
@@ -214,6 +236,7 @@ configs:
 volumes:
   plane-db-data:
   plane-redis-data:
+  plane-mq-data:
   plane-minio-data:
 
 networks:
