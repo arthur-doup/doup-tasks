@@ -1,8 +1,8 @@
-use-editor-flagging-BmVhhsRh.js:228 Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently
-(anonymous) @ use-editor-flagging-BmVhhsRh.js:228
+use-editor-flagging--6SlblIG.js:228 Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently
+(anonymous) @ use-editor-flagging--6SlblIG.js:228
 doup-design/projects/:1 Mixed Content: The page at 'https://tasks.doupadvice.com/doup-design/projects/' was loaded over HTTPS, but requested an insecure XMLHttpRequest endpoint 'http://tasks.doupadvice.com/uploads/'. This request has been blocked; the content must be served over HTTPS.
-projects-app-provider-CP-SRVHR.js:16 Error uploading cover image: undefined
-A @ projects-app-provider-CP-SRVHR.js:16
+projects-app-provider-DCQ_Hnlt.js:16 Error uploading cover image: undefined
+A @ projects-app-provider-DCQ_Hnlt.js:16
 await in A
 (anonymous) @ index.esm-CoDHXyCT.js:1
 await in (anonymous)

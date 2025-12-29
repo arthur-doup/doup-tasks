@@ -15,8 +15,11 @@ export class FileUploadService extends APIService {
     data: FormData,
     uploadProgressHandler?: AxiosRequestConfig["onUploadProgress"]
   ): Promise<void> {
+    // Force HTTPS
+    const secureUrl = url && url.startsWith("http://") ? url.replace("http://", "https://") : url;
+
     this.cancelSource = axios.CancelToken.source();
-    return this.post(url, data, {
+    return this.post(secureUrl, data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
