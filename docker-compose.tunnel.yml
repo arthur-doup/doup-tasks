@@ -41,16 +41,18 @@ x-app-env: &app-env
   USE_HTTPS: "1"
   CSRF_TRUSTED_ORIGINS: https://tasks.doupadvice.com
   # ─────────────────────────────────────────────────────────────────────────────
-  # SMTP Configuration (Zoho)
+  # SMTP Configuration (Zoho) - Port 587 uses STARTTLS
   # ─────────────────────────────────────────────────────────────────────────────
+  EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
   EMAIL_HOST: smtp.zoho.eu
   EMAIL_PORT: "587"
   EMAIL_HOST_USER: arthur@doup.design
   EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD:-Luiz223100@}
-  EMAIL_USE_TLS: "1"
-  EMAIL_USE_SSL: "0"
+  EMAIL_USE_TLS: "True"
+  EMAIL_USE_SSL: "False"
   EMAIL_FROM: contato@doup.design
   DEFAULT_EMAIL: contato@doup.design
+  DEFAULT_FROM_EMAIL: contato@doup.design
 
 services:
   # ─────────────────────────────────────────────────────────────────────────────
