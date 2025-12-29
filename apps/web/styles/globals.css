@@ -1,6 +1,6 @@
 /* ============================================
-   iOS UI Kit Theme for Plane
-   Inspired by Apple iOS Human Interface Guidelines
+   Doup Tasks - White-Label Theme
+   Brand Colors: #CEFF1A, #FA900F, #353535
    ============================================ */
 
 @import "@plane/propel/styles/fonts";
@@ -10,11 +10,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* iOS Global Overrides - Must come after Tailwind */
+/* Doup Custom Fonts & Overrides */
+@import "./doup-fonts.css";
 @import "./ios-overrides.css";
 
 /* ============================================
-   iOS Typography Scale
+   Typography Scale
    ============================================ */
 @layer components {
   .text-1\.5xl {
@@ -29,7 +30,7 @@
 }
 
 /* ============================================
-   iOS Animations & Transitions
+   Animations & Transitions
    ============================================ */
 @layer utilities {
   @keyframes slide-up {
@@ -84,44 +85,49 @@
 @layer base {
 
   /* ============================================
-     iOS Base Typography - SF Pro style (Inter is close)
+     Doup Typography - Manrope for body
      ============================================ */
   html {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", sans-serif;
+    font-family: "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
     font-feature-settings: "cv11", "ss01";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   /* ============================================
-     iOS Light Theme (Default)
+     Doup Light Theme (Default)
      ============================================ */
   :root {
     color-scheme: light !important;
 
-    /* iOS Blue Primary Color (#007AFF) */
-    --color-primary-10: 240, 247, 255;
-    --color-primary-20: 224, 239, 255;
-    --color-primary-30: 204, 228, 255;
-    --color-primary-40: 179, 214, 255;
-    --color-primary-50: 153, 199, 255;
-    --color-primary-60: 128, 184, 255;
-    --color-primary-70: 102, 169, 255;
-    --color-primary-80: 51, 143, 255;
-    --color-primary-90: 0, 122, 255;
-    /* iOS Blue */
-    --color-primary-100: 0, 122, 255;
-    /* iOS Blue Main */
-    --color-primary-200: 0, 113, 235;
-    --color-primary-300: 0, 102, 214;
-    --color-primary-400: 0, 89, 189;
-    --color-primary-500: 0, 76, 163;
-    --color-primary-600: 0, 61, 130;
-    --color-primary-700: 0, 48, 102;
-    --color-primary-800: 0, 36, 77;
-    --color-primary-900: 0, 24, 51;
+    /* Doup Primary Color - Lime Green (#CEFF1A) = RGB 206, 255, 26 */
+    --color-primary-10: 247, 255, 230;
+    --color-primary-20: 240, 255, 204;
+    --color-primary-30: 232, 255, 179;
+    --color-primary-40: 224, 255, 153;
+    --color-primary-50: 216, 255, 128;
+    --color-primary-60: 210, 255, 102;
+    --color-primary-70: 206, 255, 77;
+    --color-primary-80: 206, 255, 51;
+    --color-primary-90: 206, 255, 26;
+    /* #CEFF1A */
+    --color-primary-100: 206, 255, 26;
+    /* #CEFF1A - Main */
+    --color-primary-200: 185, 230, 23;
+    --color-primary-300: 165, 204, 21;
+    --color-primary-400: 144, 179, 18;
+    --color-primary-500: 124, 153, 16;
+    --color-primary-600: 103, 128, 13;
+    --color-primary-700: 82, 102, 10;
+    --color-primary-800: 62, 77, 8;
+    --color-primary-900: 41, 51, 5;
 
-    /* iOS Error Red (#FF3B30) */
+    /* Doup Accent - Orange (#FA900F) = RGB 250, 144, 15 */
+    --color-accent-100: 250, 144, 15;
+    --color-accent-200: 225, 130, 14;
+    --color-accent-300: 200, 115, 12;
+
+    /* Error Red */
     --color-error-10: 255, 252, 252;
     --color-error-20: 255, 245, 244;
     --color-error-30: 255, 220, 218;
@@ -129,42 +135,40 @@
     --color-error-200: 255, 59, 48;
     --color-error-500: 179, 41, 34;
 
-    /* iOS Background Colors - Clean whites */
+    /* Doup Background Colors */
     --color-background-100: 255, 255, 255;
-    /* primary bg */
-    --color-background-90: 249, 249, 251;
-    /* iOS grouped background */
-    --color-background-80: 242, 242, 247;
-    /* iOS secondary bg */
+    /* #FFFFFF - white */
+    --color-background-90: 249, 250, 251;
+    /* light gray */
+    --color-background-80: 210, 215, 223;
+    /* #D2D7DF */
 
     --color-background-primary: var(--color-primary-10);
     --color-background-error: var(--color-error-20);
 
-    /* iOS Text Colors */
-    --color-text-100: 0, 0, 0;
-    /* primary text - pure black */
-    --color-text-200: 60, 60, 67;
-    /* iOS secondary label */
-    --color-text-300: 99, 99, 102;
-    /* iOS tertiary label */
-    --color-text-350: 142, 142, 147;
-    /* iOS quaternary label */
-    --color-text-400: 174, 174, 178;
-    /* iOS placeholder */
+    /* Doup Text Colors - Based on #353535 */
+    --color-text-100: 53, 53, 53;
+    /* #353535 - primary text */
+    --color-text-200: 75, 75, 75;
+    /* secondary text */
+    --color-text-300: 100, 100, 100;
+    /* tertiary text */
+    --color-text-350: 130, 130, 130;
+    --color-text-400: 160, 160, 160;
+    /* placeholder */
 
     --color-text-primary: var(--color-primary-100);
     --color-text-error: var(--color-error-200);
 
-    --color-scrollbar: 174, 174, 178;
+    --color-scrollbar: 160, 160, 160;
 
-    /* iOS Border Colors - Very subtle */
-    --color-border-100: 242, 242, 247;
+    /* Doup Border Colors - Based on #D2D7DF */
+    --color-border-100: 235, 238, 242;
     /* subtle border */
-    --color-border-200: 229, 229, 234;
-    /* iOS separator */
-    --color-border-300: 209, 209, 214;
-    /* iOS opaque separator */
-    --color-border-400: 174, 174, 178;
+    --color-border-200: 210, 215, 223;
+    /* #D2D7DF */
+    --color-border-300: 190, 195, 205;
+    --color-border-400: 160, 165, 175;
     /* strong border */
 
     --color-border-primary: var(--color-primary-40);

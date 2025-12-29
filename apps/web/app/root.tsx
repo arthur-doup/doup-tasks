@@ -21,7 +21,7 @@ import type { Route } from "./+types/root";
 import { CustomErrorComponent } from "./error";
 import { AppProvider } from "./provider";
 
-const APP_TITLE = "Plane | Simple, extensible, open-source project management tool.";
+const APP_TITLE = "Doup Tasks | Gestão de projetos simplificada";
 
 export const links: LinksFunction = () => [
   { rel: "icon", type: "image/png", sizes: "32x32", href: favicon32 },
@@ -45,7 +45,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#fff" />
         {/* Meta info for PWA */}
-        <meta name="application-name" content="Plane" />
+        <meta name="application-name" content="Doup Tasks" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
@@ -96,24 +96,24 @@ export const meta: Route.MetaFunction = () => [
   { property: "og:title", content: APP_TITLE },
   {
     property: "og:description",
-    content: "Open-source project management tool to manage work items, cycles, and product roadmaps easily",
+    content: "Plataforma de gestão de projetos para gerenciar tarefas, ciclos e roadmaps com facilidade",
   },
-  { property: "og:url", content: "https://app.plane.so/" },
+  { property: "og:url", content: "https://tasks.doupadvice.com/" },
   { property: "og:image", content: ogImage },
   { property: "og:image:width", content: "1200" },
   { property: "og:image:height", content: "630" },
-  { property: "og:image:alt", content: "Plane - Modern project management" },
+  { property: "og:image:alt", content: "Doup Tasks - Gestão de projetos" },
   {
     name: "keywords",
     content:
-      "software development, plan, ship, software, accelerate, code management, release management, project management, work item tracking, agile, scrum, kanban, collaboration",
+      "gestão de projetos, tarefas, kanban, agile, scrum, colaboração, produtividade, workflow, doup, tasks",
   },
-  { name: "twitter:site", content: "@planepowers" },
+  { name: "twitter:site", content: "@doupadvice" },
   { name: "twitter:card", content: "summary_large_image" },
   { name: "twitter:image", content: ogImage },
   { name: "twitter:image:width", content: "1200" },
   { name: "twitter:image:height", content: "630" },
-  { name: "twitter:image:alt", content: "Plane - Modern project management" },
+  { name: "twitter:image:alt", content: "Doup Tasks - Gestão de projetos" },
 ];
 
 export default function Root() {

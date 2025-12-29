@@ -1,0 +1,129 @@
+/* ============================================
+   Doup Custom Fonts
+   NewBlackTypeface for headings
+   Manrope (Google Fonts) for body text
+   ============================================ */
+
+/* Google Fonts - Manrope */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+/* NewBlackTypeface - Custom Font */
+@font-face {
+    font-family: 'NewBlackTypeface';
+    src: url('../assets/fonts/NewBlackTypeface-UltraLight.ttf') format('truetype');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NewBlackTypeface';
+    src: url('../assets/fonts/NewBlackTypeface-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NewBlackTypeface';
+    src: url('../assets/fonts/NewBlackTypeface-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NewBlackTypeface';
+    src: url('../assets/fonts/NewBlackTypeface-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NewBlackTypeface';
+    src: url('../assets/fonts/NewBlackTypeface-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NewBlackTypeface';
+    src: url('../assets/fonts/NewBlackTypeface-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NewBlackTypeface';
+    src: url('../assets/fonts/NewBlackTypeface-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ============================================
+   Typography Application
+   ============================================ */
+
+/* Headings use NewBlackTypeface */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading,
+.title,
+[class*="text-2xl"],
+[class*="text-3xl"],
+[class*="text-4xl"],
+[class*="text-5xl"],
+[class*="text-6xl"] {
+    font-family: 'NewBlackTypeface', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.02em !important;
+}
+
+/* Body text uses Manrope */
+body,
+p,
+span,
+div,
+a,
+button,
+input,
+textarea,
+select,
+label,
+.body-text,
+.paragraph,
+[class*="text-xs"],
+[class*="text-sm"],
+[class*="text-base"],
+[class*="text-lg"],
+[class*="text-xl"] {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* Specific font weight adjustments for Manrope */
+body {
+    font-weight: 400;
+}
+
+strong,
+b,
+.font-bold,
+.font-semibold {
+    font-weight: 600 !important;
+}
+
+.font-medium {
+    font-weight: 500 !important;
+}
+
+.font-light {
+    font-weight: 300 !important;
+}
