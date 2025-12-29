@@ -317,6 +317,11 @@ export default {
   morning: "morning",
   afternoon: "afternoon",
   evening: "evening",
+  // Complete greetings
+  greeting_dawn: "Good night",
+  greeting_morning: "Good morning",
+  greeting_afternoon: "Good afternoon",
+  greeting_evening: "Good evening",
   show_all: "Show all",
   show_less: "Show less",
   no_data_yet: "No Data yet",
