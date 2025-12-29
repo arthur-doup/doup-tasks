@@ -82,7 +82,7 @@ export default {
       already_have_an_account: "Já tem uma conta?",
       login: "Login",
       create_account: "Criar conta",
-      new_to_plane: "Novo no Plane?",
+      new_to_plane: "Novo aqui?",
       back_to_sign_in: "Voltar ao login",
       resend_in: "Reenviar em {seconds} segundos",
       sign_in_with_unique_code: "Login com código único",
@@ -226,14 +226,14 @@ export default {
   you_do_not_have_the_permission_to_access_this_page: "Você não tem permissão para acessar esta página.",
   something_went_wrong_please_try_again: "Algo deu errado. Por favor, tente novamente.",
   load_more: "Carregar mais",
-  select_or_customize_your_interface_color_scheme: "Selecione ou personalize o esquema de cores da sua interface.",
+  select_or_customize_your_interface_color_scheme: "Selecione o esquema de cores da sua interface.",
   theme: "Tema",
   system_preference: "Preferência do sistema",
   light: "Claro",
   dark: "Escuro",
-  light_contrast: "Alto contraste claro",
-  dark_contrast: "Alto contraste escuro",
-  custom: "Personalizado",
+  light_contrast: "",
+  dark_contrast: "",
+  custom: "",
   select_your_theme: "Selecione seu tema",
   customize_your_theme: "Personalize seu tema",
   background_color: "Cor de fundo",
@@ -409,7 +409,7 @@ export default {
   full_changelog: "Changelog completo",
   support: "Suporte",
   discord: "Discord",
-  powered_by_plane_pages: "Desenvolvido por Plane Pages",
+  powered_by_plane_pages: "Desenvolvido por Doup Tasks",
   please_select_at_least_one_invitation: "Selecione pelo menos um convite.",
   please_select_at_least_one_invitation_description:
     "Selecione pelo menos um convite para entrar no espaço de trabalho.",
@@ -574,7 +574,7 @@ export default {
       not_right_now: "Agora não",
       create_project: {
         title: "Criar um projeto",
-        description: "A maioria das coisas começa com um projeto no Plane.",
+        description: "A maioria das coisas começa com um projeto.",
         cta: "Começar",
       },
       invite_team: {
@@ -588,7 +588,7 @@ export default {
         cta: "Configurar este espaço de trabalho",
       },
       personalize_account: {
-        title: "Personalize o Plane.",
+        title: "Personalize sua experiência.",
         description: "Escolha sua foto, cores e muito mais.",
         cta: "Personalizar agora",
       },
@@ -623,7 +623,7 @@ export default {
       },
     },
     new_at_plane: {
-      title: "Novidades no Plane",
+      title: "Novidades",
     },
     quick_tutorial: {
       title: "Tutorial rápido",
