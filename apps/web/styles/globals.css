@@ -10,6 +10,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* iOS Global Overrides - Must come after Tailwind */
+@import "./ios-overrides.css";
+
 /* ============================================
    iOS Typography Scale
    ============================================ */
@@ -34,6 +37,7 @@
       transform: translateY(10px);
       opacity: 0;
     }
+
     to {
       transform: translateY(0);
       opacity: 1;
@@ -41,9 +45,12 @@
   }
 
   @keyframes ios-bounce {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: scale(1);
     }
+
     50% {
       transform: scale(0.97);
     }
@@ -54,6 +61,7 @@
       opacity: 0;
       transform: scale(0.95);
     }
+
     to {
       opacity: 1;
       transform: scale(1);
@@ -74,6 +82,7 @@
 }
 
 @layer base {
+
   /* ============================================
      iOS Base Typography - SF Pro style (Inter is close)
      ============================================ */
@@ -99,8 +108,10 @@
     --color-primary-60: 128, 184, 255;
     --color-primary-70: 102, 169, 255;
     --color-primary-80: 51, 143, 255;
-    --color-primary-90: 0, 122, 255; /* iOS Blue */
-    --color-primary-100: 0, 122, 255; /* iOS Blue Main */
+    --color-primary-90: 0, 122, 255;
+    /* iOS Blue */
+    --color-primary-100: 0, 122, 255;
+    /* iOS Blue Main */
     --color-primary-200: 0, 113, 235;
     --color-primary-300: 0, 102, 214;
     --color-primary-400: 0, 89, 189;
@@ -119,19 +130,27 @@
     --color-error-500: 179, 41, 34;
 
     /* iOS Background Colors - Clean whites */
-    --color-background-100: 255, 255, 255; /* primary bg */
-    --color-background-90: 249, 249, 251; /* iOS grouped background */
-    --color-background-80: 242, 242, 247; /* iOS secondary bg */
+    --color-background-100: 255, 255, 255;
+    /* primary bg */
+    --color-background-90: 249, 249, 251;
+    /* iOS grouped background */
+    --color-background-80: 242, 242, 247;
+    /* iOS secondary bg */
 
     --color-background-primary: var(--color-primary-10);
     --color-background-error: var(--color-error-20);
 
     /* iOS Text Colors */
-    --color-text-100: 0, 0, 0; /* primary text - pure black */
-    --color-text-200: 60, 60, 67; /* iOS secondary label */
-    --color-text-300: 99, 99, 102; /* iOS tertiary label */
-    --color-text-350: 142, 142, 147; /* iOS quaternary label */
-    --color-text-400: 174, 174, 178; /* iOS placeholder */
+    --color-text-100: 0, 0, 0;
+    /* primary text - pure black */
+    --color-text-200: 60, 60, 67;
+    /* iOS secondary label */
+    --color-text-300: 99, 99, 102;
+    /* iOS tertiary label */
+    --color-text-350: 142, 142, 147;
+    /* iOS quaternary label */
+    --color-text-400: 174, 174, 178;
+    /* iOS placeholder */
 
     --color-text-primary: var(--color-primary-100);
     --color-text-error: var(--color-error-200);
@@ -139,10 +158,14 @@
     --color-scrollbar: 174, 174, 178;
 
     /* iOS Border Colors - Very subtle */
-    --color-border-100: 242, 242, 247; /* subtle border */
-    --color-border-200: 229, 229, 234; /* iOS separator */
-    --color-border-300: 209, 209, 214; /* iOS opaque separator */
-    --color-border-400: 174, 174, 178; /* strong border */
+    --color-border-100: 242, 242, 247;
+    /* subtle border */
+    --color-border-200: 229, 229, 234;
+    /* iOS separator */
+    --color-border-300: 209, 209, 214;
+    /* iOS opaque separator */
+    --color-border-400: 174, 174, 178;
+    /* strong border */
 
     --color-border-primary: var(--color-primary-40);
     --color-border-error: var(--color-error-100);
@@ -214,7 +237,8 @@
     --color-pi-300: var(--color-primary-200);
     --color-pi-400: var(--color-primary-200);
     --color-pi-500: var(--color-primary-200);
-    --color-pi-600: 88, 86, 214; /* iOS Purple */
+    --color-pi-600: 88, 86, 214;
+    /* iOS Purple */
     --color-pi-700: var(--color-primary-100);
     --color-pi-800: 52, 52, 128;
     --color-pi-900: 28, 28, 68;
@@ -224,16 +248,20 @@
     --color-subscription-free-200: 142, 142, 147;
     --color-subscription-free-400: 99, 99, 102;
 
-    --color-subscription-one-200: 255, 149, 0; /* iOS Orange */
+    --color-subscription-one-200: 255, 149, 0;
+    /* iOS Orange */
     --color-subscription-one-400: 230, 134, 0;
 
-    --color-subscription-pro-200: 52, 199, 89; /* iOS Green */
+    --color-subscription-pro-200: 52, 199, 89;
+    /* iOS Green */
     --color-subscription-pro-400: 40, 167, 69;
 
-    --color-subscription-business-200: 175, 82, 222; /* iOS Purple */
+    --color-subscription-business-200: 175, 82, 222;
+    /* iOS Purple */
     --color-subscription-business-400: 147, 51, 194;
 
-    --color-subscription-enterprise-200: 255, 45, 85; /* iOS Pink */
+    --color-subscription-enterprise-200: 255, 45, 85;
+    /* iOS Pink */
     --color-subscription-enterprise-400: 220, 20, 60;
 
     /* Toast - iOS style */
@@ -390,7 +418,8 @@
     --color-primary-50: 30, 75, 140;
     --color-primary-60: 35, 90, 170;
     --color-primary-70: 50, 110, 200;
-    --color-primary-80: 64, 156, 255; /* iOS Dark Mode Blue */
+    --color-primary-80: 64, 156, 255;
+    /* iOS Dark Mode Blue */
     --color-primary-90: 64, 156, 255;
     --color-primary-100: 64, 156, 255;
     --color-primary-200: 100, 175, 255;
@@ -403,15 +432,19 @@
     --color-primary-900: 252, 254, 255;
 
     /* iOS Dark Background */
-    --color-background-100: 0, 0, 0; /* Pure black for OLED */
-    --color-background-90: 28, 28, 30; /* iOS secondary bg */
-    --color-background-80: 44, 44, 46; /* iOS tertiary bg */
+    --color-background-100: 0, 0, 0;
+    /* Pure black for OLED */
+    --color-background-90: 28, 28, 30;
+    /* iOS secondary bg */
+    --color-background-80: 44, 44, 46;
+    /* iOS tertiary bg */
 
     --color-background-primary: var(--color-background-90);
     --color-background-error: var(--color-background-90);
 
     --color-text-primary: var(--color-primary-80);
-    --color-text-error: 255, 69, 58; /* iOS Dark Red */
+    --color-text-error: 255, 69, 58;
+    /* iOS Dark Red */
 
     --color-border-primary: var(--color-primary-200);
     --color-border-error: 255, 69, 58;
@@ -433,7 +466,8 @@
     --color-pi-300: var(--color-primary-200);
     --color-pi-400: var(--color-primary-200);
     --color-pi-500: var(--color-primary-200);
-    --color-pi-600: 94, 92, 230; /* iOS Dark Purple */
+    --color-pi-600: 94, 92, 230;
+    /* iOS Dark Purple */
     --color-pi-700: var(--color-primary-100);
     --color-pi-800: 60, 60, 150;
     --color-pi-900: 35, 35, 85;
@@ -442,22 +476,29 @@
     /* iOS Dark Subscriptions */
     --color-subscription-free-200: 174, 174, 178;
     --color-subscription-free-400: 142, 142, 147;
-    --color-subscription-one-200: 255, 159, 10; /* iOS Dark Orange */
+    --color-subscription-one-200: 255, 159, 10;
+    /* iOS Dark Orange */
     --color-subscription-one-400: 255, 149, 0;
-    --color-subscription-pro-200: 48, 209, 88; /* iOS Dark Green */
+    --color-subscription-pro-200: 48, 209, 88;
+    /* iOS Dark Green */
     --color-subscription-pro-400: 52, 199, 89;
-    --color-subscription-business-200: 191, 90, 242; /* iOS Dark Purple */
+    --color-subscription-business-200: 191, 90, 242;
+    /* iOS Dark Purple */
     --color-subscription-business-400: 175, 82, 222;
-    --color-subscription-enterprise-200: 255, 55, 95; /* iOS Dark Pink */
+    --color-subscription-enterprise-200: 255, 55, 95;
+    /* iOS Dark Pink */
     --color-subscription-enterprise-400: 255, 45, 85;
   }
 
   [data-theme="dark"] {
     --color-text-100: 255, 255, 255;
-    --color-text-200: 235, 235, 245; /* iOS secondary */
-    --color-text-300: 174, 174, 178; /* iOS tertiary */
+    --color-text-200: 235, 235, 245;
+    /* iOS secondary */
+    --color-text-300: 174, 174, 178;
+    /* iOS tertiary */
     --color-text-350: 142, 142, 147;
-    --color-text-400: 99, 99, 102; /* iOS quaternary */
+    --color-text-400: 99, 99, 102;
+    /* iOS quaternary */
 
     --color-scrollbar: 99, 99, 102;
 
@@ -594,34 +635,44 @@ body {
 }
 
 /* iOS style buttons and interactive elements */
-button, [role="button"], .clickable {
-  transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-              background-color 0.2s ease-in-out,
-              opacity 0.15s ease-in-out;
+button,
+[role="button"],
+.clickable {
+  transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    background-color 0.2s ease-in-out,
+    opacity 0.15s ease-in-out;
 }
 
-button:active, [role="button"]:active, .clickable:active {
+button:active,
+[role="button"]:active,
+.clickable:active {
   transform: scale(0.97);
 }
 
 /* iOS style inputs */
-input, textarea, select {
+input,
+textarea,
+select {
   transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
   border-color: rgba(var(--color-primary-100));
   box-shadow: 0 0 0 3px rgba(var(--color-primary-100), 0.15);
 }
 
 /* iOS Cards */
-.card, [class*="card"] {
+.card,
+[class*="card"] {
   border-radius: 12px;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.card:hover, [class*="card"]:hover {
+.card:hover,
+[class*="card"]:hover {
   transform: translateY(-1px);
 }
 
@@ -669,16 +720,14 @@ input:focus, textarea:focus, select:focus {
 
 /* Emoji icon picker - iOS gradient */
 .conical-gradient {
-  background: conic-gradient(
-    from 180deg at 50% 50%,
-    #ff3b30 0deg,
-    #ff9500 60deg,
-    #ffcc00 120deg,
-    #34c759 180deg,
-    #5ac8fa 240deg,
-    #007aff 300deg,
-    #af52de 360deg
-  );
+  background: conic-gradient(from 180deg at 50% 50%,
+      #ff3b30 0deg,
+      #ff9500 60deg,
+      #ffcc00 120deg,
+      #34c759 180deg,
+      #5ac8fa 240deg,
+      #007aff 300deg,
+      #af52de 360deg);
 }
 
 /* Progress bar */
@@ -754,6 +803,7 @@ div.web-view-spinner div {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0.25;
   }
@@ -763,6 +813,7 @@ div.web-view-spinner div {
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0.25;
   }
@@ -857,15 +908,18 @@ div.web-view-spinner div.bar12 {
   * {
     scrollbar-width: none;
   }
+
   .vertical-scrollbar,
   .horizontal-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: rgba(174, 174, 178, 0.3) transparent;
   }
+
   .vertical-scrollbar:hover,
   .horizontal-scrollbar:hover {
     scrollbar-color: rgba(174, 174, 178, 0.5) transparent;
   }
+
   .vertical-scrollbar:active,
   .horizontal-scrollbar:active {
     scrollbar-color: rgba(174, 174, 178, 0.7) transparent;
