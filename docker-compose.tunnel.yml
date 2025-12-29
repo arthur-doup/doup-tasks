@@ -68,7 +68,7 @@ services:
   # FRONTEND
   # ─────────────────────────────────────────────────────────────────────────────
   plane-web:
-    image: makeplane/plane-frontend:stable
+    image: plane-web-custom:latest
     networks:
       - plane-net
     environment:
