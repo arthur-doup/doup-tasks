@@ -20,6 +20,17 @@ export default defineConfig(() => ({
   },
   build: {
     assetsInlineLimit: 0,
+    // Security: Disable source maps in production
+    sourcemap: false,
+    // Security: Use terser for aggressive minification
+    minify: 'terser' as const,
+    terserOptions: {
+      mangle: true,
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
   },
   plugins: [reactRouter(), tsconfigPaths({ projects: [path.resolve(__dirname, "tsconfig.json")] })],
   resolve: {

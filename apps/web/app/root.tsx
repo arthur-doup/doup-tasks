@@ -68,6 +68,14 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
         </AppProvider>
         <Scripts />
+        {/* Security: Anti-debug warning with recruitment message */}
+        <Script id="security-warning">
+          {`(function() {
+            console.log('%c🔐 Segurança', 'font-size: 24px; font-weight: bold; color: #3b82f6;');
+            console.log('%cVocê pode querer trabalhar conosco, gostamos de dev\\'s curiosos ;)', 'font-size: 14px; color: #6b7280;');
+            console.log('%cMande seu currículo para contato@doupadvice.com com o título "Quero trabalhar em tecSec".', 'font-size: 14px; color: #10b981; font-weight: bold;');
+          })();`}
+        </Script>
         {!!isSessionRecorderEnabled && process.env.VITE_SESSION_RECORDER_KEY && (
           <Script id="clarity-tracking">
             {`(function(c,l,a,r,i,t,y){

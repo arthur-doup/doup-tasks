@@ -1,0 +1,78 @@
+Request URL
+https://tasks.doupadvice.com/uploads
+Request Method
+POST
+Status Code
+301 Moved Permanently
+Remote Address
+104.21.7.182:443
+Referrer Policy
+strict-origin-when-cross-origin
+alt-svc
+h3=":443"; ma=86400
+cf-cache-status
+DYNAMIC
+cf-ray
+9b5654decc2a7113-LIS
+content-type
+text/html
+date
+Mon, 29 Dec 2025 03:50:08 GMT
+location
+/uploads/
+nel
+{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+priority
+u=1,i
+report-to
+{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=0rn2oNQJ%2Feb1km4ZSBTMlIjGIVK0BxunToOUUuxcq3N1k7KBKr9g%2Fr7WPPnDiK%2BiyK%2FCIKHUKsyjhPNKwgrH%2BUKW2llaf6SVf3NmekGsb7%2Bc1WwB"}]}
+server
+cloudflare
+server-timing
+cfExtPri
+x-content-type-options
+nosniff
+x-frame-options
+SAMEORIGIN
+x-xss-protection
+1; mode=block
+:authority
+tasks.doupadvice.com
+:method
+POST
+:path
+/uploads
+:scheme
+https
+accept
+application/json, text/plain, */*
+accept-encoding
+gzip, deflate, br, zstd
+accept-language
+pt-BR,pt;q=0.9
+content-length
+7545
+content-type
+multipart/form-data; boundary=----WebKitFormBoundaryKtSo7KX2i4oYoAAd
+cookie
+csrftoken=iiLiurA1hbqBu6kc1W35cROCgMZv1uzm; session-id=m1svpdlkhymea92w9bigx8iss6tlztpqcf9ak4wynpczbqmya4huraoic6i40f0jwh4l0qfyzvx2e5l4y2f15lcvzck5r4c9xnp73ngl5oz2ebcxw5jppt4dr3inm86t
+origin
+https://tasks.doupadvice.com
+priority
+u=1, i
+referer
+https://tasks.doupadvice.com/doup-design/settings/
+sec-ch-ua
+"Google Chrome";v="143", "Chromium";v="143", "Not A(Brand";v="24"
+sec-ch-ua-mobile
+?0
+sec-ch-ua-platform
+"Windows"
+sec-fetch-dest
+empty
+sec-fetch-mode
+cors
+sec-fetch-site
+same-origin
+user-agent
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36

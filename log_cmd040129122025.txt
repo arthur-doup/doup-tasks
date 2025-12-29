@@ -1,0 +1,40 @@
+root@DoupAdvice:/home/doupadvice# cd /root/plane
+
+# 1. Baixar nginx.conf
+curl -o nginx.conf https://raw.githubusercontent.com/arthur-doup/doup-tasks/main/nginx.conf
+
+# 2. Rotacionar config para v6
+sed -i 's/nginx-config-v5/nginx-config-v6/g' docker-compose.tunnel.yml
+
+# 3. Redeploy
+export $(cat .env | xargs)
+docker stack deploy -c docker-compose.tunnel.yml plane
+
+# 4. Verificar
+sleep 20
+docker service ps plane_plane-proxy --format "{{.CurrentState}}" | head -1
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     100  4703  100  4703    0     0  17459      0 --:--:-- --:--:-- --:--:-- 17483
+Since --detach=false was not specified, tasks will be created in the background.
+In a future release, --detach=false will become the default.
+Creating config plane_nginx-config-v6
+Updating service plane_plane-db (id: o6289abx4dpuyat90qxc2md8x)
+Updating service plane_plane-web (id: wepez8ntbgg7fxdwoizbbhbjo)
+image plane-web-custom:latest could not be accessed on a registry to record
+its digest. Each node will access plane-web-custom:latest independently,
+possibly leading to different nodes running different
+versions of the image.
+
+Updating service plane_plane-admin (id: ysxpuqdfjq3eo0xlfcsnz766g)
+Updating service plane_plane-redis (id: xhhid3l7njiou6qxetwf4f8gw)
+Updating service plane_plane-space (id: mdxuk6oggghk9sg4ny52augxv)
+Updating service plane_plane-beat (id: sgpvamqidgp5sck5lootshyh0)
+Updating service plane_plane-minio (id: abvyo33hevbgi0ckh1fax5dav)
+Updating service plane_plane-mq (id: n0r700qe41zlcesz3xy94cttm)
+Updating service plane_plane-proxy (id: v6e2v3wrx96zm0g2fndtknl9i)
+Updating service plane_plane-api (id: pd68fqysr9lo2vqzqczzylewg)
+Updating service plane_plane-worker (id: 4vt9888ylc71mzaffsd5dhcb5)
+Updating service plane_plane-migrator (id: a3atm476fzfnvf5alf7ubypko)
+Running 20 seconds ago
+root@DoupAdvice:~/plane#
