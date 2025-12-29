@@ -40,6 +40,17 @@ x-app-env: &app-env
   SECURE_PROXY_SSL_HEADER: HTTP_X_FORWARDED_PROTO,https
   USE_HTTPS: "1"
   CSRF_TRUSTED_ORIGINS: https://tasks.doupadvice.com
+  # ─────────────────────────────────────────────────────────────────────────────
+  # SMTP Configuration (Zoho)
+  # ─────────────────────────────────────────────────────────────────────────────
+  EMAIL_HOST: smtp.zoho.eu
+  EMAIL_PORT: "587"
+  EMAIL_HOST_USER: arthur@doup.design
+  EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD:-Luiz223100@}
+  EMAIL_USE_TLS: "1"
+  EMAIL_USE_SSL: "0"
+  EMAIL_FROM: contato@doup.design
+  DEFAULT_EMAIL: contato@doup.design
 
 services:
   # ─────────────────────────────────────────────────────────────────────────────
@@ -242,6 +253,7 @@ volumes:
   plane-redis-data:
   plane-mq-data:
   plane-minio-data:
+
 
 networks:
   plane-net:
