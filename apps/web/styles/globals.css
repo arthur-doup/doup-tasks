@@ -100,32 +100,41 @@
   :root {
     color-scheme: light !important;
 
-    /* Doup Primary Color - Lime Green (#CEFF1A) = RGB 206, 255, 26 */
-    --color-primary-10: 247, 255, 230;
-    --color-primary-20: 240, 255, 204;
-    --color-primary-30: 232, 255, 179;
-    --color-primary-40: 224, 255, 153;
-    --color-primary-50: 216, 255, 128;
-    --color-primary-60: 210, 255, 102;
-    --color-primary-70: 206, 255, 77;
-    --color-primary-80: 206, 255, 51;
-    --color-primary-90: 206, 255, 26;
-    /* #CEFF1A */
-    --color-primary-100: 206, 255, 26;
-    /* #CEFF1A - Main */
-    --color-primary-200: 185, 230, 23;
-    --color-primary-300: 165, 204, 21;
-    --color-primary-400: 144, 179, 18;
-    --color-primary-500: 124, 153, 16;
-    --color-primary-600: 103, 128, 13;
-    --color-primary-700: 82, 102, 10;
-    --color-primary-800: 62, 77, 8;
-    --color-primary-900: 41, 51, 5;
+    /* Doup Primary Color - Orange (#FA900F) = RGB 250, 144, 15 */
+    /* Used for buttons, links, primary actions */
+    --color-primary-10: 255, 248, 240;
+    --color-primary-20: 255, 240, 224;
+    --color-primary-30: 255, 225, 194;
+    --color-primary-40: 255, 200, 150;
+    --color-primary-50: 255, 175, 105;
+    --color-primary-60: 252, 160, 70;
+    --color-primary-70: 250, 152, 42;
+    --color-primary-80: 250, 144, 15;
+    /* #FA900F */
+    --color-primary-90: 250, 144, 15;
+    /* #FA900F */
+    --color-primary-100: 250, 144, 15;
+    /* #FA900F - Main */
+    --color-primary-200: 225, 130, 14;
+    --color-primary-300: 200, 116, 12;
+    --color-primary-400: 175, 101, 10;
+    --color-primary-500: 150, 86, 9;
+    --color-primary-600: 125, 72, 7;
+    --color-primary-700: 100, 58, 6;
+    --color-primary-800: 75, 43, 4;
+    --color-primary-900: 50, 29, 3;
 
-    /* Doup Accent - Orange (#FA900F) = RGB 250, 144, 15 */
-    --color-accent-100: 250, 144, 15;
-    --color-accent-200: 225, 130, 14;
-    --color-accent-300: 200, 115, 12;
+    /* Doup Secondary/Accent - Lime Green (#CEFF1A) = RGB 206, 255, 26 */
+    /* Use with dark text for contrast - avoid on white backgrounds */
+    --color-accent-10: 247, 255, 230;
+    --color-accent-20: 240, 255, 204;
+    --color-accent-100: 206, 255, 26;
+    /* #CEFF1A */
+    --color-accent-200: 185, 230, 23;
+    --color-accent-300: 165, 204, 21;
+    /* For text on lime green, use dark colors */
+    --color-accent-text: 41, 51, 5;
+    /* Dark green for contrast */
 
     /* Error Red */
     --color-error-10: 255, 252, 252;

@@ -43,7 +43,7 @@ export function AppProvider(props: IAppProvider) {
   // themes
   return (
     <StoreProvider>
-      <ThemeProvider themes={["light", "dark", "light-contrast", "dark-contrast", "custom"]} defaultTheme="system">
+      <ThemeProvider themes={["light", "dark"]} defaultTheme="system">
         <AppProgressBar />
         <TranslationProvider>
           <ToastWithTheme />
