@@ -1,0 +1,60 @@
+root@DoupAdvice:~/plane-new# # Teste se o docker-compose lê o .env
+cd /root/plane-new
+docker compose config 2>&1 | grep -A5 "POSTGRES"
+
+# OU verifique direto
+cat .env
+
+# Tente exportar as variáveis antes do deploy
+export $(cat .env | xargs)
+docker stack deploy -c docker-compose.tunnel.yml plane
+time="2026-01-01T04:07:32-03:00" level=warning msg="The \"POSTGRES_DB\" variable is not set. Defaulting to a blank string."
+time="2026-01-01T04:07:32-03:00" level=warning msg="The \"POSTGRES_USER\" variable is not set. Defaulting to a blank string."
+time="2026-01-01T04:07:32-03:00" level=warning msg="The \"RABBITMQ_PASSWORD\" variable is not set. Defaulting to a blank string."
+time="2026-01-01T04:07:32-03:00" level=warning msg="The \"RABBITMQ_VHOST\" variable is not set. Defaulting to a blank string."
+time="2026-01-01T04:07:32-03:00" level=warning msg="The \"AWS_ACCESS_KEY_ID\" variable is not set. Defaulting to a blank string."
+time="2026-01-01T04:07:32-03:00" level=warning msg="The \"AWS_SECRET_ACCESS_KEY\" variable is not set. Defaulting to a blank string."
+env file /root/plane-new/apps/api/.env not found: stat /root/plane-new/apps/api/.env: no such file or directory
+# Database
+POSTGRES_PASSWORD=XlnSCBTXkF0fSmy3wmVfDK1T
+
+# Django Secret Key
+SECRET_KEY=aJlrTNrR23FAVg9UfkdbaTZwmdRy5eSTR0T9Sn9H5q58y8Jyog
+
+# RabbitMQ
+RABBITMQ_USER=plane
+RABBITMQ_PASS=fMpLm3YBzmGNOOV29AI39pbT
+
+# Minio (Storage)
+MINIO_ACCESS_KEY=nRbFHeVEiloXCH6keBbk
+MINIO_SECRET_KEY=zXpdN3oHAzioNJTOkSjBB8pGFVn5lAaYmJCJi8ft
+
+# Email SMTP (Zoho)
+EMAIL_HOST_PASSWORD=Luiz223100651@
+bash: export: `#': not a valid identifier
+bash: export: `#': not a valid identifier
+bash: export: `#': not a valid identifier
+bash: export: `#': not a valid identifier
+bash: export: `(Storage)': not a valid identifier
+bash: export: `#': not a valid identifier
+bash: export: `(Zoho)': not a valid identifier
+Since --detach=false was not specified, tasks will be created in the background.
+In a future release, --detach=false will become the default.
+Updating service plane_plane-proxy (id: hwdp98d4rs6rvgnhkdkke7v8e)
+Updating service plane_plane-worker (id: o02f3geu4rpvevu0sm0bsbqq1)
+Updating service plane_plane-beat (id: tnbfj3hs0824vsijj6umm7u9y)
+Updating service plane_plane-web (id: jq3t9zpzvn3l6e8vhcik5mnxl)
+image plane-web-custom:latest could not be accessed on a registry to record
+its digest. Each node will access plane-web-custom:latest independently,
+possibly leading to different nodes running different
+versions of the image.
+
+Updating service plane_plane-db (id: ia0rijyrt7eas5v8wzk5qa7nl)
+Updating service plane_plane-mq (id: w788cch8t02tqonp6kbm5fip1)
+Updating service plane_plane-api (id: lpgikjroaofzftd31ejd3ppde)
+Updating service plane_plane-minio (id: sulmvefpwneag8jol31vawrfm)
+Updating service plane_plane-space (id: snyulk4pb5tvgg2x5tn80xcum)
+Updating service plane_plane-redis (id: eyv79nelivnqopjhgtapp32lk)
+Updating service plane_plane-admin (id: lds75jzay18gj3ug5if11yk1k)
+Updating service plane_plane-migrator (id: hfrjvkddi2qu5epm5bgipbrdm)
+root@DoupAdvice:~/plane-new#

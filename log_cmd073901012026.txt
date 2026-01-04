@@ -1,0 +1,35 @@
+root@DoupAdvice:~/plane-new# # Ver status atual
+docker service ls | grep plane
+
+# Ver logs mais recentes
+docker service logs plane_plane-api --tail 10 --since 1m
+
+# Testar o site
+curl -I http://localhost:3010/api/instances/
+splza2sv0fjl   plane_plane-admin           replicated   1/1        makeplane/plane-admin:stable
+qqwgtmiguv2l   plane_plane-api             replicated   1/1        makeplane/plane-backend:stable
+hpaet4a247q8   plane_plane-beat            replicated   1/1        makeplane/plane-backend:stable
+r5tiey6wqqvf   plane_plane-db              replicated   1/1        postgres:15.7-alpine
+hjnv01uh8kj4   plane_plane-migrator        replicated   0/1        makeplane/plane-backend:stable
+wclsurc1tigi   plane_plane-minio           replicated   1/1        minio/minio:latest
+g31vyyrlttym   plane_plane-mq              replicated   1/1        rabbitmq:3.13.6-management-alpine
+bb92o3nlw15f   plane_plane-proxy           replicated   1/1        nginx:alpine                             *:3010->80/tcp
+yswe6vvrgb73   plane_plane-redis           replicated   1/1        valkey/valkey:7.2.11-alpine
+bujuyd93i1rs   plane_plane-space           replicated   0/1        makeplane/plane-space:stable
+dnmep8g4dm98   plane_plane-web             replicated   1/1        plane-web-custom:latest
+4xuob6qg6r1q   plane_plane-worker          replicated   0/1        makeplane/plane-backend:stable
+HTTP/1.1 200 OK
+Server: nginx/1.29.4
+Date: Thu, 01 Jan 2026 07:38:46 GMT
+Content-Type: application/json
+Connection: keep-alive
+Cache-Control: private, max-age=12
+Allow: GET, PATCH, HEAD, OPTIONS
+Vary: Accept-Encoding, Cookie, origin
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+Content-Security-Policy: upgrade-insecure-requests
+
+root@DoupAdvice:~/plane-new#

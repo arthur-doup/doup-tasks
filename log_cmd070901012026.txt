@@ -1,0 +1,47 @@
+root@DoupAdvice:~/plane-new# # Verificar se o volume do DB ainda existe
+docker volume ls | grep plane
+
+# Ver se o banco está iniciando
+docker service logs plane_plane-db --tail 20 2>&1
+local     plane_plane-db-data
+local     plane_plane-minio-data
+local     plane_plane-mq-data
+local     plane_plane-redis-data
+local     plane_plane-uploads
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    |
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | PostgreSQL Database directory appears to contain a database; Skipping initialization
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    |
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:05:44.044 UTC [1] LOG:  starting PostgreSQL 15.7 on x86_64-pc-linux-musl, compiled by gcc (Alpine 13.2.1_git20240309) 13.2.1 20240309, 64-bit
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:05:44.099 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:05:44.099 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:05:44.115 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:05:44.133 UTC [29] LOG:  database system was shut down at 2026-01-01 07:05:07 UTC
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:05:44.150 UTC [1] LOG:  database system is ready to accept connections
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:07:44.252 UTC [1] LOG:  received fast shutdown request
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:07:44.257 UTC [1] LOG:  aborting any active transactions
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:07:44.259 UTC [1] LOG:  background worker "logical replication launcher" (PID 32) exited with exit code 1
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:07:44.264 UTC [27] LOG:  shutting down
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:07:44.269 UTC [27] LOG:  checkpoint starting: shutdown immediate
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:07:44.299 UTC [27] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.006 s, total=0.035 s; sync files=3, longest=0.003 s, average=0.002 s; distance=0 kB, estimate=0 kB
+plane_plane-db.1.qnztklu5p1ou@DoupAdvice    | 2026-01-01 07:07:44.314 UTC [1] LOG:  database system is shut down
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | PostgreSQL Database directory appears to contain a database; Skipping initialization
+plane_plane-db.1.n6oszsesv724@DoupAdvice    |
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:07:49.708 UTC [1] LOG:  starting PostgreSQL 15.7 on x86_64-pc-linux-musl, compiled by gcc (Alpine 13.2.1_git20240309) 13.2.1 20240309, 64-bit
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:07:49.708 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:07:49.708 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:07:49.822 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:07:49.837 UTC [29] LOG:  database system was shut down at 2026-01-01 07:07:44 UTC
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:07:49.864 UTC [1] LOG:  database system is ready to accept connections
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:07:56.622 UTC [33] FATAL:  password authentication failed for user "plane"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:07:56.622 UTC [33] DETAIL:  Connection matched pg_hba.conf line 100: "host all all all scram-sha-256"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:07:57.797 UTC [35] FATAL:  password authentication failed for user "plane"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:07:57.797 UTC [35] DETAIL:  Connection matched pg_hba.conf line 100: "host all all all scram-sha-256"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:08:13.866 UTC [36] FATAL:  password authentication failed for user "plane"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:08:13.866 UTC [36] DETAIL:  Connection matched pg_hba.conf line 100: "host all all all scram-sha-256"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:08:14.381 UTC [37] FATAL:  password authentication failed for user "plane"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:08:14.381 UTC [37] DETAIL:  Connection matched pg_hba.conf line 100: "host all all all scram-sha-256"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:08:18.862 UTC [38] FATAL:  password authentication failed for user "plane"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:08:18.862 UTC [38] DETAIL:  Connection matched pg_hba.conf line 100: "host all all all scram-sha-256"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:08:19.918 UTC [39] FATAL:  password authentication failed for user "plane"
+plane_plane-db.1.n6oszsesv724@DoupAdvice    | 2026-01-01 07:08:19.918 UTC [39] DETAIL:  Connection matched pg_hba.conf line 100: "host all all all scram-sha-256"
+root@DoupAdvice:~/plane-new#
