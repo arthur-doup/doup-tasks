@@ -30,6 +30,8 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useMember } from "@/hooks/store/use-member";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
+// plain-web-custom custom fields
+import { TimeTrackingPanel } from "@/components/time-tracking";
 // plane web components
 import { WorkItemAdditionalSidebarProperties } from "@/plane-web/components/issues/issue-details/additional-properties";
 import { IssueParentSelectRoot } from "@/plane-web/components/issues/issue-details/parent-select-root";
@@ -80,6 +82,11 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
       <div className="flex items-center h-full w-full flex-col divide-y-2 divide-custom-border-200 overflow-hidden">
         <div className="h-full w-full overflow-y-auto px-6">
           <h5 className="mt-6 text-sm font-medium">{t("common.properties")}</h5>
+
+          <div className="mb-4">
+            <TimeTrackingPanel workspaceSlug={workspaceSlug} projectId={projectId} issueId={issueId} />
+          </div>
+
           {/* TODO: render properties using a common component */}
           <div className={`mb-2 mt-3 space-y-2.5 ${!isEditable ? "opacity-60" : ""}`}>
             <div className="flex h-8 items-center gap-2">
