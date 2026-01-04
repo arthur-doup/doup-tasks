@@ -30,8 +30,9 @@ import { useIssueDetail } from "@/hooks/store/use-issue-detail";
 import { useMember } from "@/hooks/store/use-member";
 import { useProject } from "@/hooks/store/use-project";
 import { useProjectState } from "@/hooks/store/use-project-state";
+// plain-web-custom custom fields
+import { TimeTrackingPanel } from "@/components/time-tracking";
 // plane web components
-// components
 import { WorkItemAdditionalSidebarProperties } from "@/plane-web/components/issues/issue-details/additional-properties";
 import { IssueParentSelectRoot } from "@/plane-web/components/issues/issue-details/parent-select-root";
 import { TransferHopInfo } from "@/plane-web/components/issues/issue-details/sidebar/transfer-hop-info";
@@ -117,9 +118,8 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 buttonVariant={issue?.assignee_ids?.length > 1 ? "transparent-without-text" : "transparent-with-text"}
                 className="group w-3/5 flex-grow"
                 buttonContainerClassName="w-full text-left"
-                buttonClassName={`text-sm justify-between ${
-                  issue?.assignee_ids?.length > 0 ? "" : "text-custom-text-400"
-                }`}
+                buttonClassName={`text-sm justify-between ${issue?.assignee_ids?.length > 0 ? "" : "text-custom-text-400"
+                  }`}
                 hideIcon={issue.assignee_ids?.length === 0}
                 dropdownArrow
                 dropdownArrowClassName="h-3.5 w-3.5 hidden group-hover:inline"
@@ -176,8 +176,8 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                 buttonClassName={`text-sm ${issue?.start_date ? "" : "text-custom-text-400"}`}
                 hideIcon
                 clearIconClassName="h-3 w-3 hidden group-hover:inline"
-                // TODO: add this logic
-                // showPlaceholderIcon
+              // TODO: add this logic
+              // showPlaceholderIcon
               />
             </div>
 
@@ -206,8 +206,8 @@ export const IssueDetailsSidebar = observer(function IssueDetailsSidebar(props: 
                   })}
                   hideIcon
                   clearIconClassName="h-3 w-3 hidden group-hover:inline !text-custom-text-100"
-                  // TODO: add this logic
-                  // showPlaceholderIcon
+                // TODO: add this logic
+                // showPlaceholderIcon
                 />
                 {issue.target_date && <DateAlert date={issue.target_date} workItem={issue} projectId={projectId} />}
               </div>
